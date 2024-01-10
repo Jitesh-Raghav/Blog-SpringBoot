@@ -55,3 +55,5 @@ public class PostController {
         return new ResponseEntity<>("Post entity deleted successfully", HttpStatus.OK);
     }
 }
+
+//need to be regular here for WakaTime plugin to work..
