@@ -1,14 +1,12 @@
 package com.example.springbootblog.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.HashSet;
 import java.util.Set;
 
-@Data
+@Getter@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 
@@ -29,6 +27,6 @@ public class Post {
     @Column(name="content", nullable=false)
     private String content;
 
-    @OneToMany(mappedBy="post", cascade = CascadeType.ALL)  //cascadeType is ALL cuz jo cheez parent ke saath ho, wo child pe bhi apply ho, like if post is removed then comment also removed..
+    @OneToMany(mappedBy="post", cascade = CascadeType.ALL, orphanRemoval = true)  //cascadeType is ALL cuz jo cheez parent ke saath ho, wo child pe bhi apply ho, like if post is removed then comment also removed..
     private Set<Comment> comments = new HashSet<>();
 }
