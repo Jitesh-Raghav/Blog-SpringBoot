@@ -41,6 +41,7 @@ public class SecurityConfig {
          http.csrf((csrf) -> csrf.disable()).authorizeHttpRequests((authorize)->
                         // authorize.anyRequest().authenticated()   //cuz we cannot authenticate any request, its the role of admin
                            authorize.requestMatchers(HttpMethod.GET,"/api/**").permitAll()
+                                   .requestMatchers("/api/auth/**").permitAll()
                                    .anyRequest().authenticated()
          ).httpBasic(Customizer.withDefaults());
 
