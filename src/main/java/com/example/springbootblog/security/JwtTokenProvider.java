@@ -13,7 +13,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
 
 import javax.crypto.SecretKey;
-import java.security.Key;
 import java.util.Date;
 
 @Component
@@ -25,7 +24,7 @@ public class JwtTokenProvider {
     @Value("${app-jwt-expiration-milliseconds}")
     private long jwtExpirationDate;
 
-    //gnerate JWT token
+    //generate JWT token
     public String generateToken(Authentication authentication){
 
         String username= authentication.getName();
@@ -44,7 +43,7 @@ public class JwtTokenProvider {
         return token;
     }
 
-    private Key Key(){
+    private SecretKey Key(){
         return Keys.hmacShaKeyFor(Decoders.BASE64.decode(jwtSecret));
     }
 
@@ -52,7 +51,7 @@ public class JwtTokenProvider {
     public String getUsername(String token){
 
         return Jwts.parser()
-                .verifyWith((SecretKey) Key())
+                .verifyWith(Key())
                 .build()
                 .parseSignedClaims(token)
                 .getPayload()
@@ -64,7 +63,7 @@ public class JwtTokenProvider {
 
         try{
             Jwts.parser()
-                    .verifyWith((SecretKey) Key())
+                    .verifyWith(Key())
                     .build()
                     .parse(token);
             return true;

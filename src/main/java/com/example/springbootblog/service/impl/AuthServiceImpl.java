@@ -7,6 +7,7 @@ import com.example.springbootblog.payload.LoginDto;
 import com.example.springbootblog.payload.RegisterDto;
 import com.example.springbootblog.repository.RoleRepository;
 import com.example.springbootblog.repository.UserRepository;
+import com.example.springbootblog.security.JwtTokenProvider;
 import com.example.springbootblog.service.AuthService;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -26,16 +27,19 @@ public class AuthServiceImpl implements AuthService {
     private UserRepository userRepository;
     private RoleRepository roleRepository;
     private PasswordEncoder passwordEncoder;
+    private JwtTokenProvider jwtTokenProvider;
 
 
     public AuthServiceImpl(AuthenticationManager authenticationManager,
                            UserRepository userRepository,
                            RoleRepository roleRepository,
-                           PasswordEncoder passwordEncoder) {
+                           PasswordEncoder passwordEncoder,
+                           JwtTokenProvider jwtTokenProvider) {
         this.authenticationManager = authenticationManager;
         this.userRepository= userRepository;
         this.roleRepository= roleRepository;
         this.passwordEncoder= passwordEncoder;
+        this.jwtTokenProvider= jwtTokenProvider;
     }
 
     @Override
@@ -46,7 +50,10 @@ public class AuthServiceImpl implements AuthService {
 
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
-        return "User Logged-in Successfully";
+        String token= jwtTokenProvider.generateToken(authentication);
+
+        //return "User Logged-in Successfully";
+        return token;
     }
 
     @Override

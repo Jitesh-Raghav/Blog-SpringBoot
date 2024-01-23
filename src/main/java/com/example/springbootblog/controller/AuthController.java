@@ -1,5 +1,6 @@
 package com.example.springbootblog.controller;
 
+import com.example.springbootblog.payload.JWTAuthResponse;
 import com.example.springbootblog.payload.LoginDto;
 import com.example.springbootblog.payload.RegisterDto;
 import com.example.springbootblog.service.AuthService;
@@ -22,9 +23,13 @@ public class AuthController {
 
     //Build Login REST API
     @PostMapping(value={"/login", "/signin"})
-    public ResponseEntity<String> login(@RequestBody LoginDto loginDto){
-       String response= authService.Login(loginDto);
-        return ResponseEntity.ok(response);
+    public ResponseEntity<JWTAuthResponse> login(@RequestBody LoginDto loginDto){
+       String token= authService.Login(loginDto);
+
+        JWTAuthResponse jwtAuthResponse = new JWTAuthResponse();
+        jwtAuthResponse.setAccessToken(token);
+
+        return ResponseEntity.ok(jwtAuthResponse);
     }
 
     //Register REST API
