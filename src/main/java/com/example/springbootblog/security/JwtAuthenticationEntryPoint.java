@@ -11,7 +11,8 @@ import java.io.IOException;
 
 @Component
 public class JwtAuthenticationEntryPoint implements AuthenticationEntryPoint {
-    //This class throws exception when a unauthorized user is trying to access the app
+
+    //This class throws exception when an unauthorized user is trying to access the app
     @Override
     public void commence(HttpServletRequest request,
                          HttpServletResponse response,
