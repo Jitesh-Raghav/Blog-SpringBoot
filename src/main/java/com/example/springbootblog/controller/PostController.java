@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/posts")
+@RequestMapping("/api/v1/posts")
 @Tag(
         name="CRUD REST APIs for Post Resource"
 )
@@ -141,3 +141,5 @@ public class PostController {
 }
 
 //need to be regular here for WakaTime plugin to work...date-12/1/24
+
+//study about versioning rest apis gi
