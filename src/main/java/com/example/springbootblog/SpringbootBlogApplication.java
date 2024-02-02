@@ -1,11 +1,15 @@
 package com.example.springbootblog;
 
+import com.example.springbootblog.entity.Roles;
+import com.example.springbootblog.repository.RoleRepository;
 import io.swagger.v3.oas.annotations.ExternalDocumentation;
 import io.swagger.v3.oas.annotations.OpenAPIDefinition;
 import io.swagger.v3.oas.annotations.info.Contact;
 import io.swagger.v3.oas.annotations.info.Info;
 import io.swagger.v3.oas.annotations.info.License;
 import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
@@ -30,7 +34,7 @@ import org.springframework.context.annotation.Bean;
                 url="https://github.com/Jitesh-Raghav/Blog-SpringBoot"
         )
 )
-public class SpringbootBlogApplication {
+public class SpringbootBlogApplication implements CommandLineRunner {
 
     @Bean
     public ModelMapper modelMapper(){
@@ -40,4 +44,17 @@ public class SpringbootBlogApplication {
         SpringApplication.run(SpringbootBlogApplication.class, args);
     }
 
+    @Autowired
+    private RoleRepository roleRepository;
+    @Override
+    public void run(String... args) throws Exception {
+
+        Roles adminRole = new Roles();             //we doing this cause the role data we inserted manually, so who'll do this in aws, so here it will automatically get executed, It can also be done by creating a Data.sql file in resources...
+        adminRole.setName("ROLE_ADMIN");
+        roleRepository.save(adminRole);
+
+        Roles userRole = new Roles();             //It can also be done by manually adding them in the cloud, and also by data.sql
+        userRole.setName("ROLE_USER");
+        roleRepository.save(userRole);
+    }
 }
